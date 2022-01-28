@@ -22,6 +22,18 @@ class GraphMatrix{
     return nodes.get(nodes.size() - 1);
   }
   
+  void addNode(float x, float y, String text){
+    nodes.add(new Node(x, y));
+    ArrayList<Boolean> row = new ArrayList<Boolean>();
+    for(int i = 0; i < nodes.size(); i++){
+      row.add(false);
+    }
+    edges.add(row);
+    if(!text.equals("")){
+      nodes.get(nodes.size() - 1).textBox().setText(text);
+    }
+  }
+  
   void removeNode(Node n){
     int index = nodes.indexOf(n);
     println(index);
@@ -39,9 +51,11 @@ class GraphMatrix{
         edge.add(i);
       }
     }
-    println(this);
-    println(edge.get(0) + " " + edge.get(1));
-    edges.get(edge.get(1)).set(edge.get(0), true);
+    edges.get(edge.get(1)).set(edge.get(0), !edges.get(edge.get(1)).get(edge.get(0)));
+  }
+  
+  void loadEdges(int i, ArrayList<Boolean> arr){
+    edges.set(i, arr);
   }
   
   void display(){

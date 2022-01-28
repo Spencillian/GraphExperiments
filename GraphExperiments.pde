@@ -6,12 +6,33 @@ ArrayList<TextBox> boxes = new ArrayList<TextBox>();
 final int TEXTSIZE = 32;
 
 void setup(){
-  size(1000, 1000);
+  size(2000, 2000);
   textAlign(CENTER, CENTER);
   textLeading(TEXTSIZE/2);
   
   textSize(TEXTSIZE);
   rectMode(CENTER);
+  
+  JSONObject json = loadJSONObject("save.json");
+  
+  JSONArray arr = json.getJSONArray("nodes");
+  
+  for(int i = 0; i < arr.size(); i++){
+    JSONObject node = arr.getJSONObject(i);
+    g.addNode(node.getFloat("x"), node.getFloat("y"), node.getString("text"));
+    
+  }
+  
+  String edgesTable[] = json.getString("edgesTable").split("\n");
+  
+  for(int i = 0; i < edgesTable.length; i++){
+    ArrayList<Boolean> across = new ArrayList<Boolean>();
+    for(String s : edgesTable[i].split(" ")){
+      across.add(s.equals("true"));
+    }
+    g.loadEdges(i, across);
+  }
+  
   
   /*TODO: Deserialize from data/save.json
   - New functions
@@ -101,7 +122,9 @@ void mouseReleased(){
     if(state == S.connect){ // TODO: Edge case - pfocus = null
       state = S.select;
       focus = pfocus;
-      focus.focus();
+      if(focus != null){
+        focus.focus();
+      }
       pfocus = null;
       return;
     }
@@ -110,7 +133,6 @@ void mouseReleased(){
     g.unfocus();
     focus.focus();
   }
-  println(state);
 }
 
 void mouseDragged(){
@@ -145,7 +167,7 @@ void keyPressed(){ // Implement the textboxes on top of nodes
   }
 }
 
-void exit(){
+void exit(){ // TODO: Add a note somewhere about ESC and only ESC saving on exit
   JSONObject json = new JSONObject();
   json.setString("edgesTable", g.toString());
   

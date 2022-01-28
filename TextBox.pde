@@ -64,6 +64,10 @@ class TextBox{
     this.pos = new PVector(x, y);
   }
   
+  void setText(String text){
+    this.text = text;
+  }
+  
   String toString(){
     return text;
   }
