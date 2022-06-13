@@ -3,10 +3,10 @@ Node focus = null, pfocus = null;
 S state = S.create;
 ArrayList<TextBox> boxes = new ArrayList<TextBox>();
 
-final int TEXTSIZE = 32;
+final int TEXTSIZE = 20;
 
 void setup(){
-  size(2000, 2000);
+  size(1920, 1080);
   textAlign(CENTER, CENTER);
   textLeading(TEXTSIZE/2);
   
@@ -30,7 +30,7 @@ void setup(){
     for(String s : edgesTable[i].split(" ")){
       across.add(s.equals("true"));
     }
-    g.loadEdges(i, across);
+    g.loadEdges(across);
   }
   
   

@@ -4,7 +4,7 @@ class Node{
   boolean focus = false;
   TextBox t = null;
   
-  private final int radius = 100;
+  private final int radius = 50;
   
   Node(float x, float y){
     this.pos = new PVector(x, y);
